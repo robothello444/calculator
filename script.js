@@ -77,7 +77,7 @@ operatorBtn.forEach(button => {
 
 equalBtn.addEventListener('click', () => {
     if (number1 != "" && number2 != '' && operator != '') {
-        // Stops if it's divide by zero
+        // Stops if it's divided by zero
         if ((number1 == 0 || number2 == 0) && operator == "/") {
             displayContainer.textContent = "Cannot divide by ZERO";
             number1 = '';
