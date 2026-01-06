@@ -43,15 +43,17 @@ const clearBtn = document.querySelector(".btn-clear");
 numberBtn.forEach(button => {
     button.addEventListener('click', () => {
         if (operator == '') {
-            // Checks if there's a zero in the display to remove it
-            if (displayContainer.textContent == 0) {
+            // Checks if there's a zero or error in the display to remove it
+            if (displayContainer.textContent == 0 || displayContainer.textContent == "Cannot divide by ZERO") {
                 displayContainer.textContent = '';
             }
             number1 += button.id;
             displayContainer.textContent += button.id;
         }
         else {
-            displayContainer.textContent = '';
+            if (displayContainer.textContent == number1) {
+                displayContainer.textContent = '';
+            }
             number2 += button.id;
             displayContainer.textContent += button.id;
         }
@@ -74,11 +76,22 @@ operatorBtn.forEach(button => {
 });
 
 equalBtn.addEventListener('click', () => {
-    var results = operate(number1, number2, operator)
-    displayContainer.textContent = results;
-    number1 = results;
-    number2 = '';
-    operator = '';
+    if (number1 != "" && number2 != '' && operator != '') {
+        // Stops if it's divide by zero
+        if (number2 == 0 || isNaN(number2)) {
+            displayContainer.textContent = "Cannot divide by ZERO";
+            number1 = '';
+            number2 = '';
+            operator = ''; 
+        }
+        else {
+            var results = operate(number1, number2, operator);
+            displayContainer.textContent = results;
+            number1 = results;
+            number2 = '';
+            operator = ''; 
+        }
+    }
 });
 
 clearBtn.addEventListener('click', () => {
