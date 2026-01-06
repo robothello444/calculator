@@ -21,63 +21,69 @@ function divide(num1, num2) {
 function operate(num1, num2, operator) {
     switch (operator) {
         case "+":
-        displayContainer.textContent = add(num1, num2);
-        break;
+        return add(num1, num2);
         case "-":
-        displayContainer.textContent = substract(num1, num2);
-        break;
+        return substract(num1, num2);
         case "*":
-        displayContainer.textContent = multiply(num1, num2);
-        break;
+        return multiply(num1, num2);
         case "/":
-        displayContainer.textContent = divide(num1, num2);
-        break;
+        return divide(num1, num2);
     };
 };
 
 
 // Selectors
-const btnSelector = document.querySelectorAll("button.calc-button");
+const numberBtn = document.querySelectorAll("button.number-btn");
+const operatorBtn = document.querySelectorAll("button.operator-btn")
 const displayContainer = document.querySelector(".display");
-const equalBtnSelector = document.querySelector("button.equal-btn");
+const equalBtn = document.querySelector("button.equal-btn");
 const clearBtn = document.querySelector(".btn-clear");
 
 
-btnSelector.forEach(button => {
+numberBtn.forEach(button => {
     button.addEventListener('click', () => {
-        if ((button.id < 9 || button.id) > 0 && operator === "") {
-            // Clears display if a operation was done before
-            if ((displayContainer.textContent !== "" && number1 == "" && number2 == "" && operator == "")) {
-            displayContainer.textContent = "";
+        if (operator == '') {
+            // Checks if there's a zero in the display to remove it
+            if (displayContainer.textContent == 0) {
+                displayContainer.textContent = '';
             }
             number1 += button.id;
             displayContainer.textContent += button.id;
-            console.log(`First number: ${button.id}`) // Debug
-        } 
-        else if (button.id == "+" || button.id == "-" || button.id == "*" || button.id == "/") {
-            displayContainer.textContent += button.id;
-            operator = button.id;
-            console.log(`Operator: ${button.id}`) // Debug
         }
         else {
+            displayContainer.textContent = '';
             number2 += button.id;
             displayContainer.textContent += button.id;
-            console.log(`Second: ${button.id}`) // Debug
         }
-        console.log(`${number1}, ${number2}, ${operator}`) // Debug
     });
 });
 
-equalBtnSelector.addEventListener('click', () => {
-    displayContainer.textContent = "";
-    operate(number1, number2, operator);
-    number1 = ""; number2 = ""; operator = "";
+operatorBtn.forEach(button => {
+    button.addEventListener('click', () => {
+        if (number1 != '' && number2 != '') {
+            const results = operate(number1, number2, operator);
+            number1 = results;
+            number2 = '';
+            operator = button.id;
+            displayContainer.textContent = results;
+        }
+        else {
+            operator = button.id;
+        } 
+    });
+});
+
+equalBtn.addEventListener('click', () => {
+    var results = operate(number1, number2, operator)
+    displayContainer.textContent = results;
+    number1 = results;
+    number2 = '';
+    operator = '';
 });
 
 clearBtn.addEventListener('click', () => {
-    displayContainer.textContent = "";
+    displayContainer.textContent = "0";
     number1 = ""; number2 = ""; operator = "";
-    console.log(` Cleared ${number1}, ${number2}, ${operator}`) // Debug
 });
 
 
