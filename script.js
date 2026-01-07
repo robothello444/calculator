@@ -42,21 +42,24 @@ const clearBtn = document.querySelector(".btn-clear");
 
 numberBtn.forEach(button => {
     button.addEventListener('click', () => {
-        if (operator == '') {
-            // Checks if there's a zero or error in the display to remove it
-            if (displayContainer.textContent == 0 || displayContainer.textContent == "Cannot divide by ZERO") {
-                displayContainer.textContent = '';
+        if (displayContainer.textContent.length < 11) { // Checks for character limit
+            if (operator == '') { // Checks if there's a zero to replace it with another number
+                if (displayContainer.textContent == 0) {
+                    displayContainer.textContent = '';
+                }
+                number1 += button.id;
+                displayContainer.textContent += button.id;
             }
-            number1 += button.id;
-            displayContainer.textContent += button.id;
-        }
-        else {
-            if (displayContainer.textContent == number1) {
-                displayContainer.textContent = '';
-            }
-            number2 += button.id;
-            displayContainer.textContent += button.id;
-        }
+            else {
+                if (displayContainer.textContent == number1) {
+                    displayContainer.textContent = '';
+                }
+                number2 += button.id;
+                displayContainer.textContent += button.id;
+            }    
+        } else {
+            alert("Caracter limit reached.")
+        };
     });
 });
 
@@ -84,7 +87,7 @@ equalBtn.addEventListener('click', () => {
     if (number1 != "" && number2 != '' && operator != '') {
         // Stops if it's divided by zero
         if ((number1 == 0 || number2 == 0) && operator == "/") {
-            alert("Cannot divide by ZERO");
+            alert("Cannot divide by ZERO.");
             displayContainer.textContent = "0";
             number1 = '';
             number2 = '';
