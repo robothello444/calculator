@@ -70,8 +70,13 @@ operatorBtn.forEach(button => {
             displayContainer.textContent = results;
         }
         else {
-            operator = button.id;
-        } 
+            if (number1 == '' && number2 == '') {
+                alert('Invalid operation.');
+            }
+            else {
+                operator = button.id;
+            }
+        };
     });
 });
 
@@ -79,7 +84,8 @@ equalBtn.addEventListener('click', () => {
     if (number1 != "" && number2 != '' && operator != '') {
         // Stops if it's divided by zero
         if ((number1 == 0 || number2 == 0) && operator == "/") {
-            displayContainer.textContent = "Cannot divide by ZERO";
+            alert("Cannot divide by ZERO");
+            displayContainer.textContent = "0";
             number1 = '';
             number2 = '';
             operator = ''; 
